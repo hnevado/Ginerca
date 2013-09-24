@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lista jquery mobile</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+         <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+         <script type="text/javascript">
+         $( document ).ready(function() {
+                $('#calcular').click(function() {
+                    //Recojo los valores
+                    var precio=document.getElementById("precio").value;
+                    var kwh=document.getElementById("kwh").value;
+                    var descuento=(document.getElementById("descuento").value/100)*precio;
+                    
+                    //Hago las operaciones
+                    var resultado=(precio*kwh)-descuento;
+                    
+                    //Muestro el resultado en el input y por alerta
+                    total.value=resultado; 
+                    alert("El precio final aplicando el descuento es de: "+resultado+" euros");
+               });
+        });
+         </script>
+    </head>
+    <body>
+      <div data-role="page">
+	<div data-role="header">
+		<h1>Ginerca</h1>
+	</div>
+	<div data-role="content">	
+            <form name="calculo" method="post">
+                <label for="precio">Precio</label>
+                <input type="text" name="precio" id="precio" placeholder="Precio">
+                
+                <label for="kwh">KWH</label>
+                <input type="number" name="kwh" id="kwh" min="0">
+                
+                <label for="descuento">Descuento</label>
+                <input type="number" name="descuento" id="descuento" min="0">
+                
+                <label for="total">Total</label>
+                <input type="number" name="total" id="total" readonly="readonly">
+                
+                
+                <input type="button" id="calcular" name="calcular" value="Calcular precio">
+            </form>
+	</div>	
+	<div data-role="footer">
+		<p> &copy; 2013 - H&eacute;ctor Nevado</p>
+	</div>
+      </div>
+        
+        
+    </body>
+</html>
