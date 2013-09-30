@@ -10,23 +10,34 @@
          $( document ).ready(function() {
                 $('#calcular').click(function() {
                     //Recojo los valores
+                    var dias_facturados=document.getElementById("dias_facturados").value;
                     var precio_potencia=document.getElementById("precio_potencia").value;
+                    var kwh_contratados=document.getElementById("kwh_contratados").value;
                     var precio_consumo_termino=document.getElementById("precio_consumo_termino").value;
                     var oferta=document.getElementById("oferta").value;
+                    var kwh_consumidos=document.getElementById("kwh_consumidos").value;
+                    
+                    //Estos son los readonly, los cuales solo van a mostrar información, no recoger, por ello
+                    //de momento me quedo con el elemento, su value se lo asignaré después de realizar las operaciones
                     var calculo_365=document.getElementById("calculo_365");
                     var precio_descuento=document.getElementById("precio_descuento");
-                    
+                    var precio_potencia_total=document.getElementById("precio_potencia_total");
+                    var precio_consumo_total=document.getElementById("precio_consumo_total");
                     //Hago las operaciones
                     var resultado_potencia_365=precio_potencia/365;
                     var resultado_precio_descuento=precio_consumo_termino-((oferta/100)*precio_consumo_termino);
+                    var resultado_precio_potencia_total=dias_facturados*resultado_potencia_365*kwh_contratados;
+                    var resultado_precio_consumo_total=kwh_consumidos*resultado_precio_descuento;
                     //Muestro el resultado en el input y por alerta
                     calculo_365.value=resultado_potencia_365; 
                     precio_descuento.value=resultado_precio_descuento;
+                    precio_potencia_total.value=resultado_precio_potencia_total;
+                    precio_consumo_total.value=resultado_precio_consumo_total;
                     
                });
                
                $('#tarifa21a').click(function() {
-                    window.location.href = "#tarifa21A";
+                    window.location.assign("#tarifa21A");
                });
                
                
@@ -115,9 +126,29 @@
                  </td>  
                </tr>
                
-               <tr>
+               <tr id="ocultar1">
+                <td colspan="3" align="center"> <h3> - Calculo potencia - </h3></td>
+               </tr>
+               <tr id="ocultar2">
                 <td colspan="3">
-                 <input type="button" id="calcular" name="calcular" value="Realizar c&aacute;lculos">
+                   <label for="precio_potencia_total">Precio protencia (Dias facturados * (Precio potencia KW/A&ntilde;o : 365 dias) * KW Contratados)</label>
+                   <input type="number" name="precio_potencia_total" id="precio_potencia_total" min="0" readonly="readonly">
+                 </td>    
+               </tr>
+               
+               <tr id="ocultar3">
+                <td colspan="3" align="center"> <h3> - Calculo consumo - </h3></td>
+               </tr>
+               <tr id="ocultar4">
+                <td colspan="3">
+                   <label for="precio_consumo_total">Precio consumo (KW/h consumidos * Precio descuento)</label>
+                   <input type="number" name="precio_consumo_total" id="precio_consumo_total" min="0" readonly="readonly">
+                 </td>    
+               </tr>
+               
+               <tr>
+                <td colspan="3" align="center">
+                 <input type="button" id="calcular" name="calcular" value="Realizar c&aacute;lculos" data-theme="b" data-inline="true">
                 </td>
                </tr>
           </table>
