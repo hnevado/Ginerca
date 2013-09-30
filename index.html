@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Lista jquery mobile</title>
+        <title>Ginerca movil</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
          <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -10,48 +10,129 @@
          $( document ).ready(function() {
                 $('#calcular').click(function() {
                     //Recojo los valores
-                    var precio=document.getElementById("precio").value;
-                    var kwh=document.getElementById("kwh").value;
-                    var descuento=(document.getElementById("descuento").value/100)*precio;
+                    var precio_potencia=document.getElementById("precio_potencia").value;
+                    var precio_consumo_termino=document.getElementById("precio_consumo_termino").value;
+                    var oferta=document.getElementById("oferta").value;
+                    var calculo_365=document.getElementById("calculo_365");
+                    var precio_descuento=document.getElementById("precio_descuento");
                     
                     //Hago las operaciones
-                    var resultado=(precio*kwh)-descuento;
-                    
+                    var resultado_potencia_365=precio_potencia/365;
+                    var resultado_precio_descuento=precio_consumo_termino-((oferta/100)*precio_consumo_termino);
                     //Muestro el resultado en el input y por alerta
-                    total.value=resultado; 
-                    alert("El precio final aplicando el descuento es de: "+resultado+" euros");
+                    calculo_365.value=resultado_potencia_365; 
+                    precio_descuento.value=resultado_precio_descuento;
+                    
                });
+               
+               $('#tarifa21a').click(function() {
+                    //Recojo los valores
+                    var url = "#tarifa21A";
+
+                    $(location).attr('href',url);
+               });
+               
+               
         });
          </script>
     </head>
     <body>
-      <div data-role="page">
+     <!-- Pagina principal -->
+      <div data-role="page" id="portada">
 	<div data-role="header">
 		<h1>Ginerca</h1>
 	</div>
-	<div data-role="content">	
-            <form name="calculo" method="post">
-                <label for="precio">Precio</label>
-                <input type="number" name="precio" id="precio">
-                
-                <label for="kwh">KWH</label>
-                <input type="number" name="kwh" id="kwh" min="0">
-                
-                <label for="descuento">Descuento</label>
-                <input type="number" name="descuento" id="descuento" min="0">
-                
-                <label for="total">Total</label>
-                <input type="number" name="total" id="total" readonly="readonly">
-                
-                
-                <input type="button" id="calcular" name="calcular" value="Calcular precio">
+	<div data-role="content" align="center">	
+            <form name="index" method="post">
+                <input type="button" data-role="button" value="Tarifa 2.1 A" id="tarifa21a" data-inline="true" data-theme="e"/>
+                <input type="button" data-role="button" value="Tarifa 2.1 DHA" id="tarifa21dha" data-inline="true" data-theme="e"/>
+                <input type="button" data-role="button" value="Tarifa 3.0 A" id="tarifa30a" data-inline="true" data-theme="e"/>
             </form>
 	</div>	
 	<div data-role="footer">
 		<p> &copy; 2013 - H&eacute;ctor Nevado</p>
 	</div>
       </div>
-        
+     <!-- Fin de página principal -->
+     
+     <!-- Inicio página para 2.1 A -->
+     <div data-role="page" id="tarifa21A">
+       <div data-role="header">
+         <h1>C&aacute;lculo tarifa 2.1A</h1>
+       </div>
+       <div data-role="content">   
+         <form name="calculo" method="post">
+             <table border="0" width="100%">
+               
+               <tr>
+                <td colspan="3" align="center"> <h3> - PRECIOS Y CONSUMOS -</h3> </td>
+               </tr>
+               
+               <tr>
+                <td>
+                 <label for="dias_facturados">D&iacute;s facturados</label>
+                 <input type="number" name="dias_facturados" id="dias_facturados" min="0">
+                </td>
+                
+                <td>
+                 <label for="kwh_consumidos">KWH/h consumidos</label>
+                 <input type="number" name="kwh_consumidos" id="kwh_consumidos" min="0">
+                </td>
+               
+                <td>
+                 <label for="kwh_contratados">KW contratados</label>
+                 <input type="number" name="kwh_contratados" id="kwh_contratados" min="0">
+                </td>
+               </tr>
+               <tr>
+                <td>
+                 <label for="oferta">Oferta</label>
+                 <select name="oferta" id="oferta">
+                  <option value="5">5%</option>
+                  <option value="18">18%</option>
+                  <option value="20">20%</option>
+                 </select>
+                </td>
+            
+                <td>
+                 <label for="precio_consumo_termino">Precio consumo termino energia</label>
+                 <input type="number" name="precio_consumo_termino" id="precio_consumo_termino" min="0">
+                </td>
+                <td>
+                 <label for="precio_descuento">Precio descuento</label>
+                 <input type="number" name="precio_descuento" id="precio_descuento" min="0" readonly="readonly">
+                </td>
+               </tr>
+               <tr>
+                 <td>
+                   <label for="precio_potencia">Precio potencia KW/A&ntilde;o</label>
+                   <input type="number" name="precio_potencia" id="precio_potencia" min="0">
+                 </td>  
+                 <td>
+                   <label for="calculo_365">Precio potencia KW/A&ntilde;o : 365 dias</label>
+                   <input type="number" name="calculo_365" id="calculo_365" min="0" readonly="readonly">
+                 </td>  
+                 <td>
+                   <label for="impuesto_electrico">Impuesto el&eacute;ctrico</label>
+                   <input type="number" name="impuesto_electrico" id="impuesto_electrico" min="0">
+                 </td>  
+               </tr>
+               
+               <tr>
+                <td colspan="3">
+                 <input type="button" id="calcular" name="calcular" value="Realizar c&aacute;lculos">
+                </td>
+               </tr>
+          </table>
+         </form>
+           
+         <p><a href="#portada">Salir</a></p>   
+       </div>
+      <div data-role="footer">
+      Pie de página
+      </div>
+    </div>
+     <!-- Fin página para tarifa 2.1A -->
         
     </body>
 </html>
